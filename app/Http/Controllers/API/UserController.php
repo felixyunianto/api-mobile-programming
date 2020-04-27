@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request; 
-use App\Http\Controllers\Controller; 
-use App\User; 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
 use Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
     public function register(Request $request){
-        $this->validate($request, [
+
+        $rule = [
             'name' => 'required|min:5',
             'email' => 'required|email|max:255|unique:users',
             'password'=> 'required|min:6',
             'c_password' => 'required|same:password'
-        ]);
+        ];
+
+        $message = [
+            'required' => 'Bidang ini harus diisi',
+            'email' => 'Isikan email dengan benar.',
+            'unique' => 'Sudah ada :attribute yang terdaftar.',
+            'same' => 'Konfirmasi password tidak sama',
+            'min' => 'Bidang :attribute minimal :min'
+        ];
+
+        $validation = $this->validate($request, $rule, $message);
 
         $users = User::create([
             'name' => $request->name,
@@ -31,7 +43,7 @@ class UserController extends Controller
             'data' => $users
         ];
 
-        return response()->json([$results], 201);
+        return response()->json([$results], 200);
     }
 
     public function login(Request $request){
@@ -53,10 +65,9 @@ class UserController extends Controller
         $results[] =[
             'message' => 'success',
             'status' => true,
-            'data' => $user
+            'data' => $user,
         ];
 
-        
         return response()->json([$results], 200);
     }
 }
