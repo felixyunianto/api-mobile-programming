@@ -51,7 +51,8 @@ class StoreController extends Controller
 
         return response()->json([
             'message' => 'Berhasil ditambahkan.',
-            'status' => true
+            'status' => true,
+            'data' => $shops
         ], 200);
     }
 
