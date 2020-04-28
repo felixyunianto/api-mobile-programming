@@ -13,7 +13,7 @@ class UserController extends Controller
     public function register(Request $request){
 
         $rule = [
-            'name' => 'required|min:5',
+            'name' => 'required|min:2',
             'email' => 'required|email|max:255|unique:users',
             'password'=> 'required|min:6',
             'c_password' => 'required|same:password'
@@ -47,6 +47,17 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
+        $rule = [
+            'email' => 'required',
+            'password' => 'required'
+        ];
+
+        $message = [
+            'required' => 'Bidang ini harus diisi!'
+        ];
+
+        $this->validate($request, $rule, $message);
+
         $credential = [
             'email' => $request->email,
             'password' => $request->password

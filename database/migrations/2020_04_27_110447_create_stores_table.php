@@ -17,8 +17,7 @@ class CreateStoresTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->decimal('longitude', 10, 7);
-            $table->decimal('latitude', 10, 7);
+            $table->string('description');
             $table->timestamps();
         });
     }

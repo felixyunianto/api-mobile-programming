@@ -28,16 +28,14 @@ class StoreController extends Controller
 
     public function store(Request $request){
         $rule =[
-            'name' => 'required|min:3',
-            'address' => 'required|min:5|max:191',
-            'longitude' => 'required',
-            'latitude' => 'required'
+            'name' => 'required|min:2',
+            'address' => 'required',
+            'description' => 'required'
         ];
 
         $message = [
             'required' => 'Bidang :attribute harus diisi',
-            'min' => 'Bidang :attribute minimal :min',
-            'max' => 'Bidang :attribute maximal :max'
+            'min' => 'Bidang :attribute minimal :min'
         ];
 
         $this->validate($request, $rule, $message);
@@ -45,8 +43,7 @@ class StoreController extends Controller
         $shops = Store::create([
             'name' => $request->name,
             'address' => $request->address,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
+            'description' => $request->description,
         ]);
 
         return response()->json([
@@ -74,15 +71,13 @@ class StoreController extends Controller
     public function update(Request $request, $id){
         $rule =[
             'name' => 'required|min:3',
-            'address' => 'required|min:5|max:191',
-            'longitude' => 'required',
-            'latitude' => 'required'
+            'address' => 'required',
+            'description' => 'required'
         ];
 
         $message = [
             'required' => 'Bidang :attribute harus diisi',
             'min' => 'Bidang :attribute minimal :min',
-            'max' => 'Bidang :attribute maximal :max'
         ];
 
         $this->validate($request, $rule, $message);
@@ -91,13 +86,13 @@ class StoreController extends Controller
             $shops = Store::find($id);
             $shops->name = is_null($request->name) ? $shops->name : $request->name;
             $shops->address = is_null($request->address) ? $shops->address : $request->address;
-            $shops->longitude = is_null($request->longitude) ? $shops->longitude : $request->longitude;
-            $shops->latitude = is_null($request->latitude) ? $shops->latitude : $request->latitude;
+            $shops->description = is_null($request->description) ? $shops->description : $request->description;
             $shops->save();
 
             return response()->json([
                 'message' => 'Berhasil diubah.',
-                'status' => true
+                'status' => true,
+                'data' => $shops
             ], 200);
         }else{
             return response()->json([
