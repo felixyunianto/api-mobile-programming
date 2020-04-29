@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
+Route::get('user', 'API\UserController@index');
 
 Route::get('shop', 'API\StoreController@index');
 Route::post('shop', 'API\StoreController@store');

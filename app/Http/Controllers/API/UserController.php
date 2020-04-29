@@ -10,6 +10,20 @@ use Carbon\Carbon;
 
 class UserController extends Controller
 {
+
+    public function index(){
+        $users = User::all();
+
+        $results = [];
+        $results[] = [
+            'message' => 'success',
+            'status' => true,
+            'data' => $users
+        ];
+
+        return response()->json([$results], 200);
+    }
+
     public function register(Request $request){
 
         $rule = [
@@ -74,8 +88,8 @@ class UserController extends Controller
         
         $results = [];
         $results[] =[
-            'message' => 'success',
-            'status' => true,
+            'message' => 'Login successful',
+            'status' => 1,
             'data' => $user,
         ];
 
