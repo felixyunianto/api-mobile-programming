@@ -15,15 +15,12 @@ class StoreController extends Controller
 
     public function index(){
         $shops = Store::all();
-        $results = [];
-
-        $results[] = [
+        
+        return response()->json([
             'message' => 'success',
             'status' => true,
             'data' => $shops
-        ];
-
-        return response()->json([$results], 200);
+        ], 200);
     }
 
     public function store(Request $request){
