@@ -86,13 +86,13 @@ class UserController extends Controller
 
         $user = User::find(Auth::user()->id);
         
-        $results = [];
-        $results[] =[
+        
+        
+
+        return response()->json([
             'message' => 'Login successful',
             'status' => 1,
-            'data' => $user,
-        ];
-
-        return response()->json([$results], 200);
+            'data' => $user
+        ], 200);
     }
 }
